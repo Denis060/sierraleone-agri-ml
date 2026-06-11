@@ -3,7 +3,7 @@
 **Author:** Ibrahim Denis Fofanah  
 **Affiliation 1:** Seidenberg School of Computer Science & Information Systems, Pace University, New York, USA  
 **Affiliation 2:** RiseAfrica Foundation for STEM and Innovation, Sierra Leone  
-**Email:** if74741p@pace.edu  
+**Email:** IF57774N@pace.edu  
 
 ---
 
@@ -100,7 +100,7 @@ Open any notebook in the `notebooks/` folder directly in Google Colab. No instal
 ### Option 2 — Local Setup
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/sierraleone-agri-ml.git
+git clone https://github.com/Denis060/sierraleone-agri-ml.git
 cd sierraleone-agri-ml
 
 # Install dependencies

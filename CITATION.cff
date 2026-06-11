@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use this code or pipeline, please cite it as below."
+type: software
+authors:
+  - family-names: "Fofanah"
+    given-names: "Ibrahim Denis"
+title: "sierraleone-agri-ml: Code and data pipeline for rice yield forecasting in Sierra Leone"
+version: 1.0.0
+doi: 10.5281/zenodo.20651180
+date-released: 2026-06-11
+url: "https://github.com/Denis060/sierraleone-agri-ml"
+repository-code: "https://github.com/Denis060/sierraleone-agri-ml"
+license: MIT

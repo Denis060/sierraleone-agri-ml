@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20651180.svg)](https://doi.org/10.5281/zenodo.20651180)
+
 # Can Machine Learning Forecast Rice Yields in Data-Constrained Settings?
 ## Satellite Climate Data, National Crop Statistics, and Lessons from Sierra Leone
 

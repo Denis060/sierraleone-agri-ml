@@ -1,130 +1,166 @@
 """
 evaluation.py
 -------------
-Metrics and performance evaluation for the
-Sierra Leone Agricultural ML project.
+Walk-forward (expanding-window) validation — the ONLY validation used here.
 
-Provides test-set evaluation, k-fold cross-validation, and feature-importance
-extraction for trained tree-ensemble models.
+For each test year y in TEST_YEARS:
+    train on every usable year strictly before y   (2000-2017 -> 2018, etc.)
+    predict the single held-out year y
+Metrics (R², RMSE, MAE) are computed once, across the full set of held-out
+predictions (7 points). No random splits, no shuffling, no peeking forward.
 
-Author: Ibrahim Denis Fofanah
-Affiliation: Pace University / RiseAfrica Foundation for STEM and Innovation
+Author: Ibrahim Denis Fofanah — Pace University | RiseAfrica Foundation
 """
 
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import cross_val_score, KFold
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 
+from . import config
+from . import features as F
+from . import modeling
 
-def evaluate_models(models: dict,
-                    X_test: np.ndarray,
-                    y_test: np.ndarray) -> tuple:
+
+def _metrics(y_true, y_pred) -> dict:
+    y_true, y_pred = np.asarray(y_true, float), np.asarray(y_pred, float)
+    return {
+        'R2':   r2_score(y_true, y_pred),
+        'RMSE': float(np.sqrt(mean_squared_error(y_true, y_pred))),
+        'MAE':  float(mean_absolute_error(y_true, y_pred)),
+    }
+
+
+def walk_forward(feat: pd.DataFrame,
+                 test_years: list = None,
+                 verbose: bool = True) -> tuple:
     """
-    Evaluate all models on the test set.
-
-    Parameters
-    ----------
-    models : dict
-        Mapping of {name: trained model}.
-    X_test, y_test : np.ndarray
-        Test features and targets.
+    Run expanding-window validation for all ML models and baselines.
 
     Returns
     -------
-    tuple : (results_df, predictions)
-        results_df : pd.DataFrame sorted by R² (R², RMSE, MAE per model)
-        predictions : dict of {name: y_pred}
+    (results_df, preds_df)
+        results_df : metrics per model (R2, RMSE, MAE), sorted best RMSE first.
+        preds_df   : one row per test year with the actual and every prediction.
     """
+    test_years = test_years or config.TEST_YEARS
+    feature_cols = F.get_feature_cols(feat)
+
+    ml_models = modeling.build_models()
+    baselines = modeling.build_baselines()
+    model_names = list(ml_models) + list(baselines)
+
+    # year -> {actual, <model>: pred, ...}
+    rows = {y: {'Year': y, 'Actual': float(feat.loc[y, config.TARGET])}
+            for y in test_years}
+
+    for y in test_years:
+        train = feat[feat.index < y]
+        test  = feat[feat.index == y]
+        X_train, y_train = train[feature_cols], train[config.TARGET]
+        X_test = test[feature_cols]
+
+        # ML models: fit on the expanding window, predict the one held-out year.
+        for name, model in ml_models.items():
+            model.fit(X_train.to_numpy(), y_train.to_numpy())
+            rows[y][name] = float(model.predict(X_test.to_numpy())[0])
+
+        # Baselines: read the precomputed leakage-free column for the test year.
+        for name, base in baselines.items():
+            rows[y][name] = float(base.predict_from_frame(X_test)[0])
+
+    preds_df = pd.DataFrame([rows[y] for y in test_years]).set_index('Year')
+
+    # Metrics across all held-out years.
     results = []
-    predictions = {}
+    for name in model_names:
+        m = _metrics(preds_df['Actual'], preds_df[name])
+        results.append({'Model': name, **m})
+    results_df = (pd.DataFrame(results)
+                  .sort_values('RMSE')
+                  .reset_index(drop=True))
 
-    print('\n=== MODEL PERFORMANCE ON TEST SET ===')
-    print(f'{"Model":<22} {"R²":>8} {"RMSE":>10} {"MAE":>10}')
-    print('-' * 55)
+    if verbose:
+        print(f'\n[evaluation] walk-forward over {test_years[0]}–{test_years[-1]} '
+              f'({len(test_years)} held-out years)\n')
+        print(results_df.to_string(index=False,
+              formatters={'R2': '{:.3f}'.format,
+                          'RMSE': '{:.1f}'.format,
+                          'MAE': '{:.1f}'.format}))
 
-    for name, model in models.items():
-        y_pred = model.predict(X_test)
-        predictions[name] = y_pred
-
-        r2   = r2_score(y_test, y_pred)
-        rmse = np.sqrt(mean_squared_error(y_test, y_pred))
-        mae  = mean_absolute_error(y_test, y_pred)
-
-        results.append({'Model': name, 'R²': r2, 'RMSE': rmse, 'MAE': mae})
-        print(f'{name:<22} {r2:>8.4f} {rmse:>10.2f} {mae:>10.2f}')
-
-    results_df = pd.DataFrame(results).sort_values('R²', ascending=False).reset_index(drop=True)
-    return results_df, predictions
+    return results_df, preds_df
 
 
-def cross_validate_models(models: dict,
-                          X: np.ndarray,
-                          y: np.ndarray,
-                          cv: int = 5) -> pd.DataFrame:
+def best_ml_model_name(results_df: pd.DataFrame) -> str:
+    """Lowest-RMSE model among the ML models (excludes baselines)."""
+    ml = results_df[~results_df['Model'].str.startswith('Baseline')]
+    return ml.sort_values('RMSE').iloc[0]['Model']
+
+
+def walk_forward_featuresets(frame: pd.DataFrame,
+                             feature_sets: dict,
+                             test_years: list = None,
+                             verbose: bool = True) -> tuple:
     """
-    Run k-fold cross-validation (R²) for all models.
+    Run the identical expanding-window walk-forward for several feature sets,
+    so their metrics are directly comparable (same rows, same folds, same
+    fixed models). Baselines are computed once (feature-set independent).
 
     Parameters
     ----------
-    models : dict
-        Mapping of {name: model}.
-    X, y : np.ndarray
-        Full feature matrix and target vector.
-    cv : int
-        Number of folds (default: 5).
+    frame : pd.DataFrame
+        Year-indexed frame containing the target and every column referenced by
+        any feature set, plus the baseline columns.
+    feature_sets : dict
+        {set_name: [feature columns]} — e.g. {'crop-lags': [...], 'climate': [...]}.
 
     Returns
     -------
-    pd.DataFrame
-        Cross-validation results sorted by mean R².
+    (results_df, preds_df)
+        results_df : one row per (Feature Set, Model) with R2/RMSE/MAE, plus the
+                     two baselines (Feature Set == '—').
+        preds_df   : year-indexed predictions, columns '<Model> [<set>]' and the
+                     two baselines, plus 'Actual'.
     """
-    kf = KFold(n_splits=cv, shuffle=True, random_state=42)
-    cv_results = []
+    test_years = test_years or config.TEST_YEARS
+    ml_factory = modeling.build_models
+    baselines  = modeling.build_baselines()
 
-    print(f'\n=== {cv}-FOLD CROSS-VALIDATION ===')
-    print(f'{"Model":<22} {"Mean R²":>10} {"Std R²":>10}')
-    print('-' * 45)
+    results, preds = [], {'Actual': frame.loc[test_years, config.TARGET]}
 
-    for name, model in models.items():
-        scores = cross_val_score(model, X, y, cv=kf, scoring='r2')
-        cv_results.append({
-            'Model': name,
-            'CV_R2_Mean': scores.mean(),
-            'CV_R2_Std':  scores.std(),
-            'CV_R2_Min':  scores.min(),
-            'CV_R2_Max':  scores.max(),
-        })
-        print(f'{name:<22} {scores.mean():>10.4f} {scores.std():>10.4f}')
+    # ── ML models under each feature set ──────────────────────────────────────
+    for set_name, cols in feature_sets.items():
+        for model_name in ml_factory():
+            yhat = {}
+            for y in test_years:
+                train = frame[frame.index < y]
+                test  = frame[frame.index == y]
+                model = ml_factory()[model_name]
+                model.fit(train[cols].to_numpy(), train[config.TARGET].to_numpy())
+                yhat[y] = float(model.predict(test[cols].to_numpy())[0])
+            ypred = pd.Series(yhat).reindex(test_years)
+            preds[f'{model_name} [{set_name}]'] = ypred
+            m = _metrics(preds['Actual'].to_numpy(), ypred.to_numpy())
+            results.append({'Feature Set': set_name, 'Model': model_name, **m})
 
-    return pd.DataFrame(cv_results).sort_values('CV_R2_Mean', ascending=False).reset_index(drop=True)
+    # ── Baselines (once) ──────────────────────────────────────────────────────
+    for name, base in baselines.items():
+        ypred = pd.Series(
+            {y: float(base.predict_from_frame(frame[frame.index == y])[0])
+             for y in test_years}).reindex(test_years)
+        preds[name] = ypred
+        m = _metrics(preds['Actual'].to_numpy(), ypred.to_numpy())
+        results.append({'Feature Set': '—', 'Model': name, **m})
 
+    results_df = (pd.DataFrame(results)
+                  .sort_values('RMSE').reset_index(drop=True))
+    preds_df = pd.DataFrame(preds)
+    preds_df.index.name = 'Year'
 
-def get_feature_importance(model,
-                           feature_names: list,
-                           model_name: str = '') -> pd.DataFrame:
-    """
-    Extract and rank feature importances from a trained tree-ensemble model.
+    if verbose:
+        print(f'\n[evaluation] walk-forward {test_years[0]}–{test_years[-1]}, '
+              f'{len(feature_sets)} feature sets x 3 models + 2 baselines\n')
+        print(results_df.to_string(index=False,
+              formatters={'R2': '{:.3f}'.format, 'RMSE': '{:.1f}'.format,
+                          'MAE': '{:.1f}'.format}))
 
-    Parameters
-    ----------
-    model : fitted model
-        Model exposing a ``feature_importances_`` attribute.
-    feature_names : list
-        Feature names aligned with the model's input columns.
-    model_name : str
-        Optional label stored alongside the importances.
-
-    Returns
-    -------
-    pd.DataFrame
-        Features ranked by importance, with a percentage share column.
-    """
-    fi_df = pd.DataFrame({
-        'Feature': feature_names,
-        'Importance': model.feature_importances_,
-        'Model': model_name,
-    }).sort_values('Importance', ascending=False).reset_index(drop=True)
-
-    fi_df['Importance_Pct'] = (fi_df['Importance'] / fi_df['Importance'].sum() * 100).round(2)
-    return fi_df
+    return results_df, preds_df

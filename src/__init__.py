@@ -1,18 +1,23 @@
 # src/__init__.py
-# Sierra Leone Agricultural ML Research
-# Author: Ibrahim Denis Fofanah
-# Pace University / RiseAfrica Foundation for STEM and Innovation
+# Sierra Leone — Rice Yield Prediction pipeline
+# Author: Ibrahim Denis Fofanah — Pace University | RiseAfrica Foundation
 
-from . import data_loader
-from . import feature_engineering
-from . import models
+from . import config
+from . import data_prep
+from . import features
+from . import modeling
 from . import evaluation
-from . import visualization
+from . import visualize
+from . import download_climate
+from . import climate_features
 
 __all__ = [
-    'data_loader',
-    'feature_engineering',
-    'models',
+    'config',
+    'data_prep',
+    'features',
+    'modeling',
     'evaluation',
-    'visualization',
+    'visualize',
+    'download_climate',
+    'climate_features',
 ]

@@ -1,0 +1,152 @@
+Feature,Importance,Model,Importance_Pct
+Sweet Potato_Production,0.19275187,XGBoost,19.28
+"Cereals, primary_Production",0.15249366,XGBoost,15.25
+"Cereals, primary_Yield",0.13106272,XGBoost,13.11
+Millet_Production,0.10776237,XGBoost,10.78
+Rice_Yield_Lag1,0.08964301,XGBoost,8.96
+Groundnuts_Yield,0.059795387,XGBoost,5.98
+Rice_Prod_Per_Ha,0.05958343,XGBoost,5.96
+Kola nuts_Yield,0.047151692,XGBoost,4.72
+Fruit Primary_Yield,0.037140056,XGBoost,3.71
+"Broad beans and horse beans, dry_Production",0.027181352,XGBoost,2.72
+Sorghum_Yield,0.017822199,XGBoost,1.78
+Rice_Yield_Rolling3,0.014603395,XGBoost,1.46
+"Peas, dry_Yield",0.010421807,XGBoost,1.04
+Cereals n.e.c._Yield,0.0085965395,XGBoost,0.86
+"Other fibre crops, raw, n.e.c._Yield",0.005759852,XGBoost,0.58
+"Chillies and peppers, green (Capsicum spp. and Pimenta spp.)_Yield",0.0055615804,XGBoost,0.56
+Cocoa beans_Yield,0.00547411,XGBoost,0.55
+"Broad beans and horse beans, dry_Yield",0.0049135694,XGBoost,0.49
+Cassava_Yield,0.0038260028,XGBoost,0.38
+Groundnut oil_Production,0.003399377,XGBoost,0.34
+"Chillies and peppers, dry (Capsicum spp., Pimenta spp.), raw_Yield",0.0033684706,XGBoost,0.34
+"Other fibre crops, raw, n.e.c._Production",0.0011923346,XGBoost,0.12
+"Other vegetables, fresh n.e.c._Area",0.0011550332,XGBoost,0.12
+"Mangoes, guavas and mangosteens_Yield",0.001068511,XGBoost,0.11
+Sesame seed_Yield,0.0010342139,XGBoost,0.1
+Millet_Area,0.0009960739,XGBoost,0.1
+"Mangoes, guavas and mangosteens_Production",0.0007612427,XGBoost,0.08
+"Coconuts, in shell_Yield",0.00072067947,XGBoost,0.07
+"Coffee, green_Yield",0.0006934083,XGBoost,0.07
+Maize_Yield,0.0006031079,XGBoost,0.06
+"Other citrus fruit, n.e.c._Yield",0.0005528413,XGBoost,0.06
+Oil palm fruit_Yield,0.00043840957,XGBoost,0.04
+Cocoa beans_Production,0.00042690762,XGBoost,0.04
+"Coffee, green_Area",0.0003291598,XGBoost,0.03
+"Beer of barley, malted_Production",0.00021790624,XGBoost,0.02
+Kola nuts_Production,0.00018917945,XGBoost,0.02
+Plantains_Yield,0.0001868728,XGBoost,0.02
+Raw cane or beet sugar (centrifugal only)_Production,0.0001844884,XGBoost,0.02
+Unmanufactured tobacco_Yield,0.00010314908,XGBoost,0.01
+"Coconuts, in shell_Area",9.71667e-05,XGBoost,0.01
+Groundnuts_Area,9.335718e-05,XGBoost,0.01
+Rice_Area_Change,7.780583e-05,XGBoost,0.01
+Tomatoes_Yield,7.177733e-05,XGBoost,0.01
+Sweet Potato_Area,5.536004e-05,XGBoost,0.01
+Rice_Yield_YoY,5.5138084e-05,XGBoost,0.01
+Sugar cane_Yield,5.3553646e-05,XGBoost,0.01
+Groundnuts_Production,5.312498e-05,XGBoost,0.01
+Taro_Production,5.299991e-05,XGBoost,0.01
+Maize_Area,4.8799444e-05,XGBoost,0.0
+Cassava_Production,4.6466495e-05,XGBoost,0.0
+Cassava_Area,4.4364133e-05,XGBoost,0.0
+Taro_Yield,3.793073e-05,XGBoost,0.0
+"Other vegetables, fresh n.e.c._Production",1.46507045e-05,XGBoost,0.0
+Rice_Yield_Lag3,8.443993e-06,XGBoost,0.0
+Cassava_YoY,7.0832e-06,XGBoost,0.0
+Millet_Yield,6.1354212e-06,XGBoost,0.0
+Rice_Area,5.2795685e-06,XGBoost,0.0
+Rice_Area_Lag1,2.6937719e-06,XGBoost,0.0
+"Chillies and peppers, dry (Capsicum spp., Pimenta spp.), raw_Production",2.034278e-06,XGBoost,0.0
+Sugar cane_Area,0.0,XGBoost,0.0
+Oil palm fruit_Area,0.0,XGBoost,0.0
+Rice_Yield_Rolling5,0.0,XGBoost,0.0
+"Mangoes, guavas and mangosteens_Area",0.0,XGBoost,0.0
+Cassava_Yield_Lag1,0.0,XGBoost,0.0
+"Lentils, dry_Area",0.0,XGBoost,0.0
+Kola nuts_Area,0.0,XGBoost,0.0
+Year_Trend,0.0,XGBoost,0.0
+Decade,0.0,XGBoost,0.0
+Ebola_Period,0.0,XGBoost,0.0
+Fruit Primary_Area,0.0,XGBoost,0.0
+Eggplants (aubergines)_Area,0.0,XGBoost,0.0
+Cucumbers and gherkins_Area,0.0,XGBoost,0.0
+COVID_Period,0.0,XGBoost,0.0
+FeedSalone,0.0,XGBoost,0.0
+Cocoa beans_Area,0.0,XGBoost,0.0
+Post2010,0.0,XGBoost,0.0
+Rice_Yield_Lag2,0.0,XGBoost,0.0
+Okra_Area,0.0,XGBoost,0.0
+Soya beans_Area,0.0,XGBoost,0.0
+"Other citrus fruit, n.e.c._Area",0.0,XGBoost,0.0
+Sorghum_Area,0.0,XGBoost,0.0
+Taro_Area,0.0,XGBoost,0.0
+Tea leaves_Area,0.0,XGBoost,0.0
+Sesame seed_Area,0.0,XGBoost,0.0
+Tomatoes_Area,0.0,XGBoost,0.0
+"Pumpkins, squash and gourds_Area",0.0,XGBoost,0.0
+Plantains_Area,0.0,XGBoost,0.0
+"Peas, dry_Area",0.0,XGBoost,0.0
+Unmanufactured tobacco_Area,0.0,XGBoost,0.0
+Yams_Area,0.0,XGBoost,0.0
+"Other stimulant, spice and aromatic crops, n.e.c._Area",0.0,XGBoost,0.0
+Other pulses n.e.c._Area,0.0,XGBoost,0.0
+"Chillies and peppers, dry (Capsicum spp., Pimenta spp.), raw_Area",0.0,XGBoost,0.0
+"Other fruits, n.e.c._Area",0.0,XGBoost,0.0
+"Other fibre crops, raw, n.e.c._Area",0.0,XGBoost,0.0
+"Chillies and peppers, green (Capsicum spp. and Pimenta spp.)_Area",0.0,XGBoost,0.0
+Palm oil_Production,0.0,XGBoost,0.0
+"Cereals, primary_Area",0.0,XGBoost,0.0
+Tea leaves_Yield,0.0,XGBoost,0.0
+"Green tea (not fermented), black tea (fermented) and partly fermented tea, in immediate packings of a content not exceeding 3 kg_Production",0.0,XGBoost,0.0
+Fruit Primary_Production,0.0,XGBoost,0.0
+Eggplants (aubergines)_Production,0.0,XGBoost,0.0
+Cucumbers and gherkins_Production,0.0,XGBoost,0.0
+"Coffee, green_Production",0.0,XGBoost,0.0
+"Coconuts, in shell_Production",0.0,XGBoost,0.0
+"Chillies and peppers, green (Capsicum spp. and Pimenta spp.)_Production",0.0,XGBoost,0.0
+Cereals n.e.c._Production,0.0,XGBoost,0.0
+"Cashew nuts, in shell_Production",0.0,XGBoost,0.0
+Cabbages_Production,0.0,XGBoost,0.0
+Yams_Yield,0.0,XGBoost,0.0
+Sweet Potato_Yield,0.0,XGBoost,0.0
+Cereals n.e.c._Area,0.0,XGBoost,0.0
+Soya beans_Yield,0.0,XGBoost,0.0
+"Pumpkins, squash and gourds_Yield",0.0,XGBoost,0.0
+"Other vegetables, fresh n.e.c._Yield",0.0,XGBoost,0.0
+"Other stimulant, spice and aromatic crops, n.e.c._Yield",0.0,XGBoost,0.0
+Other pulses n.e.c._Yield,0.0,XGBoost,0.0
+"Other fruits, n.e.c._Yield",0.0,XGBoost,0.0
+Okra_Yield,0.0,XGBoost,0.0
+"Lentils, dry_Yield",0.0,XGBoost,0.0
+Eggplants (aubergines)_Yield,0.0,XGBoost,0.0
+Cucumbers and gherkins_Yield,0.0,XGBoost,0.0
+"Cashew nuts, in shell_Yield",0.0,XGBoost,0.0
+"Lentils, dry_Production",0.0,XGBoost,0.0
+Maize_Production,0.0,XGBoost,0.0
+Molasses_Production,0.0,XGBoost,0.0
+Oil of palm kernel_Production,0.0,XGBoost,0.0
+"Cashew nuts, in shell_Area",0.0,XGBoost,0.0
+Cabbages_Area,0.0,XGBoost,0.0
+"Broad beans and horse beans, dry_Area",0.0,XGBoost,0.0
+Yams_Production,0.0,XGBoost,0.0
+Unmanufactured tobacco_Production,0.0,XGBoost,0.0
+Tomatoes_Production,0.0,XGBoost,0.0
+Tea leaves_Production,0.0,XGBoost,0.0
+Sugar cane_Production,0.0,XGBoost,0.0
+Soya beans_Production,0.0,XGBoost,0.0
+Sorghum_Production,0.0,XGBoost,0.0
+Sesame seed_Production,0.0,XGBoost,0.0
+Rice_Production,0.0,XGBoost,0.0
+"Pumpkins, squash and gourds_Production",0.0,XGBoost,0.0
+Plantains_Production,0.0,XGBoost,0.0
+"Peas, dry_Production",0.0,XGBoost,0.0
+Cabbages_Yield,0.0,XGBoost,0.0
+Palm kernels_Production,0.0,XGBoost,0.0
+"Other stimulant, spice and aromatic crops, n.e.c._Production",0.0,XGBoost,0.0
+Other pulses n.e.c._Production,0.0,XGBoost,0.0
+"Other fruits, n.e.c._Production",0.0,XGBoost,0.0
+"Other citrus fruit, n.e.c._Production",0.0,XGBoost,0.0
+Okra_Production,0.0,XGBoost,0.0
+Oil palm fruit_Production,0.0,XGBoost,0.0
+Crop_Diversity_Yield,0.0,XGBoost,0.0

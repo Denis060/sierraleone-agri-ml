@@ -5,7 +5,7 @@
 
 **Author:** Ibrahim Denis Fofanah
 **Affiliation:** Seidenberg School of Computer Science & Information Systems, Pace University, New York · RiseAfrica Foundation for STEM and Innovation, Sierra Leone
-**Email:** IF57774N@pace.edu
+**Email:** ibrahim.fofanah.ds@gmail.com
 
 ---
 
@@ -212,3 +212,11 @@ MIT.
 
 *"African data scientists should train on African data to solve African problems."*
 — Ibrahim Denis Fofanah, RiseAfrica Foundation
+
+---
+
+## About the author
+
+**Ibrahim Denis Fofanah** — Data Scientist · ML / GenAI (RAG, agents) · BI & analytics · MS Data Science, Pace University (2025)
+
+[LinkedIn](https://www.linkedin.com/in/ibrahim-denis-fofanah/) · [Email](mailto:ibrahim.fofanah.ds@gmail.com) · [Live RAG portfolio project](https://moijey-copilot.vercel.app) · [GitHub](https://github.com/Denis060)
